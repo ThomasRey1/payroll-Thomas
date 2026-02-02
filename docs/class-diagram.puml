@@ -5,23 +5,52 @@ skinparam classAttributeIconSize 0
 package payroll{
 
     package Controllers{
-        class Employee{
-            - repository Repository.Employee;
+        class EmployeeController{
+            -EmployeeRepository repository
+            +EmployeeController(EmployeeRepository repository)
+            +List<payroll.Entities.Employee> all()
+            +payroll.Entities.Employee one(Long id)
         }
-        class EmployeeNotFoundAdvice()
-        class EmployeeNotFoundException()
+        class EmployeeNotFoundAdvice{
+            +EmployeeNotFoundAdvice()
+            +String employeeNotFoundHandler(payroll.Controllers.EmployeeNotFoundException ex)
+        }
+        exception EmployeeNotFoundException{
+            +EmployeeNotFoundException(Long id)
+        }
     }
 
     package Entities{
-        class Employee()
+        class Employee{
+            -Long id
+            -String name
+            -String role
+            +Employee()
+            +Employee(String name, String role)
+            +Long getId()
+            +void setId(Long id)
+            +String getName()
+            +void setName(String name)
+            +String getRole()
+            +void setRole(String role)
+            +boolean equals(Object o)
+            +int hashCode()
+            +String toString()
+        }
     }
 
     package Repositories{
-        class Employee()
-        class LoadDatabase()
+        interface EmployeeRepository
+        class LoadDatabase{
+            - {static} Logger log
+            +LoadDatabase()
+            +CommandLineRunner initDatabase(EmployeeRepository repository)
+        }
+
     }
 
     class PayrollApplication{
+        +PayrollApplication()
         + {static} main (args : string[])
     }
 }
@@ -35,6 +64,7 @@ package java.util.List{
 
 ' Relations
 payroll --> springframework
+EmployeeRepository <--* EmployeeController
 
 
 @enduml
