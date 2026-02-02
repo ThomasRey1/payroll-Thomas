@@ -66,12 +66,12 @@ After cloning this repository:
 * For getting all employees
 
 ```
-    curl localhost:8080/api/v1/employees
+    curl -X GET localhost:8080/api/v1/employees | jq
 ```
 * For getting a specific employee
 
 ```
-    curl localhost:8080/api/v1/employees/1
+    curl -X GET localhost:8080/api/v1/employees/1 | jq
 ```
 
 ## Run the tests
