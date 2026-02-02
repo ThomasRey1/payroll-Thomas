@@ -1,0 +1,13 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+== Initialization ==
+
+Client -> Server: GET /api/v1/employees
+Server --> Client: {All Employees JSON}
+
+Client -> Server: GET /api/v1/employees/1
+Client <-- Server: {Employee 1 JSON}
+@enduml
