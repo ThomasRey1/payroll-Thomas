@@ -63,7 +63,16 @@ After cloning this repository:
 
 ## Test using http requests manually
 
-//TODO
+* For getting all employees
+
+```
+    curl localhost:8080/api/v1/employees
+```
+* For getting a specific employee
+
+```
+    curl localhost:8080/api/v1/employees/1
+```
 
 ## Run the tests
 
