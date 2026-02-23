@@ -79,6 +79,10 @@ mvn test
 mvn -Dtest=EmployeeGetTest test
 ```
 
+## See Dependency
+```
+mvn dependency:tree
+```
 
 ## Run the api with Docker
 
