@@ -51,11 +51,7 @@ class EmployeeGetTest {
         // WHEN
         ResponseEntity<Employee> response =
                 restTemplate.getForEntity(
-<<<<<<<< HEAD:src/test/java/ch/etml/es/payroll/controllers/EmployeeGetTest.java
-                        "/v1/employees/{id}",
-========
                         BASE_URL + "/{id}",
->>>>>>>> 34a0bfab1ce497a6f7847b18ea84f04448fbc64f:employees/src/test/java/ch/etml/es/payroll/controllers/EmployeeGetTest.java
                         Employee.class,
                         existingEmployee.getId()
                 );
@@ -77,11 +73,7 @@ class EmployeeGetTest {
         // WHEN
         ResponseEntity<List<Employee>> response =
                 restTemplate.exchange(
-<<<<<<<< HEAD:src/test/java/ch/etml/es/payroll/controllers/EmployeeGetTest.java
-                        "/v1/employees",
-========
                         BASE_URL,
->>>>>>>> 34a0bfab1ce497a6f7847b18ea84f04448fbc64f:employees/src/test/java/ch/etml/es/payroll/controllers/EmployeeGetTest.java
                         HttpMethod.GET,
                         null,
                         new ParameterizedTypeReference<List<Employee>>() {}
