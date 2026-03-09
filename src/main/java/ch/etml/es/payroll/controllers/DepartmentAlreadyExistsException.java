@@ -1,7 +1,9 @@
-package ch.etml.es.payroll.Controllers;
+package ch.etml.es.payroll.controllers;
+
+import ch.etml.es.payroll.entities.Department;
 
 public class DepartmentAlreadyExistsException extends RuntimeException {
-  public DepartmentAlreadyExistsException(String message) {
-    super(message);
-  }
+    public DepartmentAlreadyExistsException(Department department) {
+        super("Department "+ department.getAcronym() + " already exists");
+    }
 }

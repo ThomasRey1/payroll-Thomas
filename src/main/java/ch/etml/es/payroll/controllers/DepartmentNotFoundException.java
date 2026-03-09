@@ -1,7 +1,7 @@
-package ch.etml.es.payroll.Controllers;
+package ch.etml.es.payroll.controllers;
 
 public class DepartmentNotFoundException extends RuntimeException {
-  public DepartmentNotFoundException(String message) {
-    super(message);
-  }
+    public DepartmentNotFoundException(Long id) {
+        super("Could not find department " + id);
+    }
 }
