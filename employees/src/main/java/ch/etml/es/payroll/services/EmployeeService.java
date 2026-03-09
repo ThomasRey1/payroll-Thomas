@@ -1,6 +1,7 @@
 package ch.etml.es.payroll.services;
 
 import ch.etml.es.payroll.controllers.EmployeeAlreadyExistsException;
+import ch.etml.es.payroll.controllers.EmployeeNotFoundException;
 import ch.etml.es.payroll.entities.Employee;
 import ch.etml.es.payroll.repositories.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class EmployeeService {
         EmployeeService.repository = repository;
     }
 
-    public static Employee hire(Employee employee) {
+    public static Employee create(Employee employee) {
         Employee existing = repository.findByName(employee.getName())
                 .orElse(null);
 
@@ -22,5 +23,15 @@ public class EmployeeService {
             throw new EmployeeAlreadyExistsException(employee.getName());
         }
         return repository.save(employee);
+    }
+
+    public static Employee update(Employee employee, long id) {
+        return repository.findById(id)
+                .map(e -> {
+                    e.setName(employee.getName());
+                    e.setRole(employee.getRole());
+                    return repository.save(e);
+                })
+                .orElseThrow(() -> new EmployeeNotFoundException(employee.getId()));
     }
 }

@@ -3,12 +3,14 @@ package ch.etml.es.payroll.controllers;
 import ch.etml.es.payroll.repositories.EmployeeRepository;
 import ch.etml.es.payroll.entities.Employee;
 import ch.etml.es.payroll.services.EmployeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/employees")
@@ -43,8 +45,8 @@ public class EmployeeController {
             -d "{\"name\": \"Russel George\", \"role\": \"gardener\"}"
     */
     @PostMapping("")
-    public ResponseEntity<Employee> hireEmployee(@RequestBody Employee employee) {
-        Employee created = EmployeeService.hire(employee);
+    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+        Employee created = EmployeeService.create(employee);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -55,5 +57,19 @@ public class EmployeeController {
         return ResponseEntity
                 .created(location)
                 .body(created);
+    }
+
+    /* curl sample :
+        curl -i -X PUT localhost:8080/api/v1/employees/1 ^
+            -H "Content-type:application/json" ^
+            -d "{\"name\": \"Russel George\", \"role\": \"gardener\"}"
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable Long id) {
+        Optional<Employee> existing = repository.findById(id);
+        if(existing.isPresent())
+            return new ResponseEntity<>(EmployeeService.update(employee, id), HttpStatus.OK);
+
+        return this.createEmployee(employee);
     }
 }
