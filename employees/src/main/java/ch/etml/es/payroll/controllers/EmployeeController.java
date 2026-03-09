@@ -73,6 +73,9 @@ public class EmployeeController {
         return this.createEmployee(employee);
     }
 
+    /* curl sample :
+        curl -i -X DELETE localhost:8080/api/v1/employees/1
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         repository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
