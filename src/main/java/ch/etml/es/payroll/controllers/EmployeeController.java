@@ -1,9 +1,8 @@
-package ch.etml.es.payroll.Controllers;
+package ch.etml.es.payroll.controllers;
 
-import ch.etml.es.payroll.Entities.Employee;
-import ch.etml.es.payroll.Repositories.EmployeeRepository;
+import ch.etml.es.payroll.entities.Employee;
+import ch.etml.es.payroll.repositories.EmployeeRepository;
 import ch.etml.es.payroll.services.EmployeeService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

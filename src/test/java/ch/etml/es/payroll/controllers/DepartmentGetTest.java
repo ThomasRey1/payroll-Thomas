@@ -1,8 +1,8 @@
-package ch.etml.es.payroll.Controllers;
+package ch.etml.es.payroll.controllers;
 
-import ch.etml.es.payroll.Entities.Employee;
 import ch.etml.es.payroll.PayrollApplication;
-import ch.etml.es.payroll.Repositories.EmployeeRepository;
+import ch.etml.es.payroll.entities.Department;
+import ch.etml.es.payroll.repositories.DepartmentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,35 +23,37 @@ import static org.assertj.core.api.Assertions.assertThat;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @ActiveProfiles("test")
-class EmployeeGetTest {
+class DepartmentGetTest {
+
+    private static final String BASE_URL = "/v1/departments";
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private DepartmentRepository departmentRepository;
 
-    private Employee existingEmployee;
+    private Department existingDepartment;
 
     @BeforeEach
-    void given_an_existing_employee() {
+    void given_an_existing_department() {
         // GIVEN
-        employeeRepository.deleteAll();
+        departmentRepository.deleteAll();
 
-        Employee employee = new Employee("Doe", "Supervisor");
-        Employee employee2 = new Employee("Smith", "Developer");
-        existingEmployee = employeeRepository.save(employee);
-        employeeRepository.save(employee2);
+        Department department = new Department("MKT", "Marketing");
+        Department department2 = new Department("SAS", "Sales");
+        existingDepartment = departmentRepository.save(department);
+        departmentRepository.save(department2);
     }
 
     @Test
-    void when_getting_existing_employee_then_success() {
+    void when_getting_existing_department_then_success() {
         // WHEN
-        ResponseEntity<Employee> response =
+        ResponseEntity<Department> response =
                 restTemplate.getForEntity(
-                        "/v1/employees/{id}",
-                        Employee.class,
-                        existingEmployee.getId()
+                        BASE_URL + "/{id}",
+                        Department.class,
+                        existingDepartment.getId()
                 );
 
         // THEN (HTTP)
@@ -59,22 +61,22 @@ class EmployeeGetTest {
                 .isEqualTo(HttpStatus.OK);
 
         // THEN (body)
-        Employee body = response.getBody();
+        Department body = response.getBody();
         assertThat(body).isNotNull();
-        assertThat(body.getId()).isEqualTo(existingEmployee.getId());
-        assertThat(body.getName()).isEqualTo("Doe");
-        assertThat(body.getRole()).isEqualTo("SUPERVISOR");
+        assertThat(body.getId()).isEqualTo(existingDepartment.getId());
+        assertThat(body.getAcronym()).isEqualTo("MKT");
+        assertThat(body.getDescription()).isEqualTo("Marketing");
     }
 
     @Test
-    void when_getting_all_employees_then_success() {
+    void when_getting_all_departments_then_success() {
         // WHEN
-        ResponseEntity<List<Employee>> response =
+        ResponseEntity<List<Department>> response =
                 restTemplate.exchange(
-                        "/v1/employees",
+                        BASE_URL,
                         HttpMethod.GET,
                         null,
-                        new ParameterizedTypeReference<List<Employee>>() {}
+                        new ParameterizedTypeReference<List<Department>>() {}
                 );
 
         // THEN (HTTP)
@@ -82,12 +84,12 @@ class EmployeeGetTest {
                 .isEqualTo(HttpStatus.OK);
 
         // THEN (body)
-        List<Employee> body = response.getBody();
+        List<Department> body = response.getBody();
         assertThat(body).isNotNull();
         assertThat(body).hasSizeGreaterThanOrEqualTo(2);
 
         assertThat(body)
-                .extracting(Employee::getName)
-                .contains("Doe", "Smith");
+                .extracting(Department::getDescription)
+                .contains("Marketing", "Sales");
     }
 }

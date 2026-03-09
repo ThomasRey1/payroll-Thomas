@@ -1,4 +1,4 @@
-package ch.etml.es.payroll.Controllers;
+package ch.etml.es.payroll.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class EmployeeAlreadyExistingAdvice {
+public class DepartmentAlreadyExistsAdvice {
+
     @ResponseBody
-    @ExceptionHandler(EmployeeAlreadyExistingException.class)
+    @ExceptionHandler(DepartmentAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    String employeeAlreadyExistingHandler(EmployeeAlreadyExistingException ex){
+    String departmentAlreadyExistsHandler(DepartmentAlreadyExistsException ex){
         return ex.getMessage();
     }
 }
