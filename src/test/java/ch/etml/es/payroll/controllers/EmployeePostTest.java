@@ -1,8 +1,8 @@
-package ch.etml.es.payroll.Controllers;
+package ch.etml.es.payroll.controllers;
 
-import ch.etml.es.payroll.Entities.Employee;
+import ch.etml.es.payroll.entities.Employee;
 import ch.etml.es.payroll.PayrollApplication;
-import ch.etml.es.payroll.Repositories.EmployeeRepository;
+import ch.etml.es.payroll.repositories.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
